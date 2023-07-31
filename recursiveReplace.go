@@ -1,3 +1,5 @@
+// RecursiveRepalce is th entrypoint for a recursive walk of an unmarshalld YAML document, if the type is not a string it recurses
+// using a ehlper function
 func RecursiveReplace(data interface{}, target string, replacement string) {
 	v := reflect.ValueOf(data)
 
@@ -6,7 +8,6 @@ func RecursiveReplace(data interface{}, target string, replacement string) {
 		for i := 0; i < v.Len(); i++ {
 			item := v.Index(i)
 			if item.Kind() == reflect.String {
-				fmt.Println("*****************************")
 				if strings.Contains(item.String(), target) {
 					fmt.Println("Match found:", item.String())
 				}
@@ -28,9 +29,8 @@ func RecursiveReplace(data interface{}, target string, replacement string) {
 			}
 		}
 	case reflect.String:
-		fmt.Println("=========================")
 		if strings.Contains(v.String(), target) {
-			fmt.Println("Match found:", v)
+			strings.Replace(v.String(), target, replacement, -1)
 		}
 	}
 }
